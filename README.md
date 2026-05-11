@@ -44,7 +44,7 @@ A full-stack Banking Management System built using Java Spring Boot, MySQL, HTML
 
 ## Home Page
 
-![Home Page](screenshots/index-page.jpg)
+![Home Page](mybankingapp/screenshots/index-page.jpg)
 
 ---
 
