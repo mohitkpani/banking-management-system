@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard | MyBankingApp</title>
+
+    <link rel="preconnect"
+    href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins', sans-serif;
+        }
+
+        body{
+            background:#0f172a;
+            color:white;
+            min-height:100vh;
+        }
+
+        .navbar{
+            width:100%;
+            padding:20px 80px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            background:rgba(255,255,255,0.05);
+            backdrop-filter:blur(10px);
+        }
+
+        .logo{
+            font-size:28px;
+            font-weight:700;
+            color:#38bdf8;
+        }
+
+        .nav-links{
+            display:flex;
+            align-items:center;
+            gap:20px;
+        }
+
+        .home-btn{
+            background:#38bdf8;
+            color:black !important;
+            padding:10px 18px;
+            border-radius:8px;
+            text-decoration:none;
+            font-weight:600;
+        }
+
+        .logout-btn{
+            background:#ef4444;
+            padding:10px 18px;
+            border-radius:8px;
+            text-decoration:none;
+            color:white !important;
+            font-weight:600;
+        }
+
+        .main-container{
+            padding:40px 80px;
+        }
+
+        .welcome-section{
+            margin-bottom:40px;
+        }
+
+        .welcome-section h1{
+            font-size:42px;
+            margin-bottom:10px;
+            color:#38bdf8;
+        }
+
+        .welcome-section p{
+            color:#cbd5e1;
+            font-size:18px;
+        }
+
+        .dashboard{
+            display:grid;
+            grid-template-columns:
+            repeat(auto-fit,minmax(350px,1fr));
+
+            gap:25px;
+        }
+
+        .card{
+            background:rgba(255,255,255,0.08);
+            padding:30px;
+            border-radius:20px;
+            backdrop-filter:blur(10px);
+            box-shadow:0 8px 30px rgba(0,0,0,0.4);
+        }
+
+        .card h2{
+            margin-bottom:20px;
+            color:#38bdf8;
+        }
+
+        .card input{
+            width:100%;
+            padding:14px;
+            margin-bottom:15px;
+            border:none;
+            outline:none;
+            border-radius:10px;
+            background:rgba(255,255,255,0.12);
+            color:white;
+        }
+
+        .card input::placeholder{
+            color:#cbd5e1;
+        }
+
+        .card button{
+            width:100%;
+            padding:14px;
+            border:none;
+            border-radius:10px;
+            background:#38bdf8;
+            color:black;
+            font-weight:600;
+            cursor:pointer;
+        }
+
+        .delete-btn{
+            background:#ef4444 !important;
+            color:white !important;
+        }
+
+        #message{
+            text-align:center;
+            margin-top:30px;
+            padding:15px;
+            border-radius:10px;
+            background:rgba(34,197,94,0.15);
+            color:#22c55e;
+            font-size:18px;
+            font-weight:500;
+            display:none;
+        }
+
+        .users-table,
+        .transaction-table{
+            width:100%;
+            margin-top:20px;
+            border-collapse:collapse;
+            display:block;
+            overflow-x:auto;
+            white-space:nowrap;
+        }
+
+        .users-table th,
+        .users-table td,
+        .transaction-table th,
+        .transaction-table td{
+
+            border:1px solid rgba(255,255,255,0.1);
+            padding:10px;
+            text-align:center;
+            font-size:14px;
+        }
+
+        .users-table th,
+        .transaction-table th{
+
+            background:#38bdf8;
+            color:black;
+        }
+
+        .users-table td,
+        .transaction-table td{
+
+            background:rgba(255,255,255,0.05);
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+            MyBankingApp
+        </div>
+
+        <div class="nav-links">
+
+            <a href="index.html"
+            class="home-btn">
+                Home
+            </a>
+
+            <a href="#"
+            class="logout-btn"
+            onclick="logout()">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <div class="main-container">
+
+        <div class="welcome-section">
+
+            <h1>
+                Admin Dashboard
+            </h1>
+
+            <p>
+                Manage users, accounts and banking operations.
+            </p>
+
+        </div>
+
+
+        <div class="dashboard">
+
+
+            <!-- CREATE ACCOUNT -->
+
+            <div class="card">
+
+                <h2>Create Bank Account</h2>
+
+                <input type="number"
+                id="userId"
+                placeholder="Enter User ID">
+
+                <button onclick="createAccount()">
+
+                    Create Account
+
+                </button>
+
+            </div>
+
+
+
+            <!-- VIEW USERS -->
+
+            <div class="card">
+
+                <h2>View All Users</h2>
+
+                <button onclick="getAllUsers()">
+
+                    Fetch Users
+
+                </button>
+
+                <table class="users-table"
+                id="usersTable">
+
+                </table>
+
+            </div>
+
+
+
+            <!-- DELETE USER -->
+
+            <div class="card">
+
+                <h2>Delete User</h2>
+
+                <input type="number"
+                id="deleteUserId"
+                placeholder="Enter User ID">
+
+                <button class="delete-btn"
+                onclick="deleteUser()">
+
+                    Delete User
+
+                </button>
+
+            </div>
+
+
+
+            <!-- REGISTER ADMIN -->
+
+            <div class="card">
+
+                <h2>Register Admin</h2>
+
+                <input type="text"
+                id="adminName"
+                placeholder="Enter Name">
+
+                <input type="email"
+                id="adminEmail"
+                placeholder="Enter Email">
+
+                <input type="password"
+                id="adminPassword"
+                placeholder="Enter Password">
+
+                <button onclick="registerAdmin()">
+
+                    Register Admin
+
+                </button>
+
+            </div>
+
+
+
+            <!-- ALL TRANSACTIONS -->
+
+            <div class="card">
+
+                <h2>All Transactions</h2>
+
+                <button onclick="loadAllTransactions()">
+
+                    View Transactions
+
+                </button>
+
+                <table class="transaction-table"
+                id="allTransactionTable">
+
+                </table>
+
+            </div>
+
+        </div>
+
+        <div id="message"></div>
+
+    </div>
+
+
+    <script>
+
+        function showMessage(text){
+
+            const message =
+            document.getElementById("message");
+
+            message.style.display = "block";
+
+            message.innerText = text;
+
+            setTimeout(() => {
+
+                message.style.display = "none";
+
+            },10000);
+        }
+
+
+
+        async function createAccount(){
+
+            const userId =
+            document.getElementById("userId").value;
+
+            const response =
+            await fetch(
+            `http://localhost:8080/account/create/${userId}`,{
+
+                method:"POST"
+            });
+
+            const result =
+            await response.text();
+
+            showMessage(result);
+        }
+
+
+
+        async function getAllUsers(){
+
+            const response =
+            await fetch(
+            "http://localhost:8080/admin/users");
+
+            const users =
+            await response.json();
+
+            let tableData = `
+
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                </tr>
+            `;
+
+            users.forEach(user => {
+
+                tableData += `
+
+                    <tr>
+                        <td>${user.id}</td>
+                        <td>${user.name}</td>
+                        <td>${user.email}</td>
+                        <td>${user.role}</td>
+                    </tr>
+                `;
+            });
+
+            document.getElementById("usersTable")
+            .innerHTML = tableData;
+
+            showMessage("Users fetched successfully");
+        }
+
+
+
+        async function deleteUser(){
+
+            const id =
+            document.getElementById(
+            "deleteUserId").value;
+
+            const response =
+            await fetch(
+            `http://localhost:8080/admin/delete/${id}`,{
+
+                method:"DELETE"
+            });
+
+            const result =
+            await response.text();
+
+            showMessage(result);
+        }
+
+
+
+        async function registerAdmin(){
+
+            const adminData = {
+
+                name:
+                document.getElementById(
+                "adminName").value,
+
+                email:
+                document.getElementById(
+                "adminEmail").value,
+
+                password:
+                document.getElementById(
+                "adminPassword").value
+            };
+
+            await fetch(
+            "http://localhost:8080/admin/register-admin",{
+
+                method:"POST",
+
+                headers:{
+                    "Content-Type":"application/json"
+                },
+
+                body: JSON.stringify(adminData)
+            });
+
+            showMessage(
+            "Admin Registered Successfully");
+        }
+
+
+
+        async function loadAllTransactions(){
+
+            const response =
+            await fetch(
+            "http://localhost:8080/account/all-transactions");
+
+            const transactions =
+            await response.json();
+
+            let tableData = `
+
+                <tr>
+
+                    <th>Account Number</th>
+
+                    <th>Type</th>
+
+                    <th>Amount</th>
+
+                    <th>Time</th>
+
+                </tr>
+            `;
+
+            transactions.forEach(transaction => {
+
+                tableData += `
+
+                    <tr>
+
+                        <td>
+                        ${transaction.accountNumber}
+                        </td>
+
+                        <td>
+                        ${transaction.transactionType}
+                        </td>
+
+                        <td>
+                        ₹ ${transaction.amount}
+                        </td>
+
+                        <td>
+                        ${transaction.transactionTime}
+                        </td>
+
+                    </tr>
+                `;
+            });
+
+            document.getElementById(
+            "allTransactionTable")
+            .innerHTML = tableData;
+
+            showMessage(
+            "Transactions fetched successfully");
+        }
+
+
+
+        function logout(){
+
+            window.location.href =
+            "login.html";
+        }
+
+    </script>
+
+</body>
+</html>
