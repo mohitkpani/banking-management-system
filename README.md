@@ -50,31 +50,31 @@ A full-stack Banking Management System built using Java Spring Boot, MySQL, HTML
 
 ## Login Page
 
-![Login Page](screenshots/login-page.jpg)
+![Login Page](mybankingapp/screenshots/login-page.jpg)
 
 ---
 
 ## User Dashboard
 
-![User Dashboard](screenshots/user-dashboard.jpg)
+![User Dashboard](mybankingapp/screenshots/user-dashboard.jpg)
 
 ---
 
 ## Razorpay Payment Integration
 
-![Razorpay Payment](screenshots/razorpay-payment.jpg)
+![Razorpay Payment](mybankingapp/screenshots/razorpay-payment.jpg)
 
 ---
 
 ## Transaction History
 
-![Transaction History](screenshots/transaction-history.jpg)
+![Transaction History](mybankingapp/screenshots/transaction-history.jpg)
 
 ---
 
 ## Admin Dashboard
 
-![Admin Dashboard](screenshots/admin-dashboard.jpg)
+![Admin Dashboard](mybankingapp/screenshots/admin-dashboard.jpg)
 
 ---
 
